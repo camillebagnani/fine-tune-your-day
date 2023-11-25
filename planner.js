@@ -8,13 +8,13 @@ function addNewTask() {
         addTaskButton.hide()
             inputBar.append(`<label for="dropdown" id="dropdown-label">Choose a task:</label> 
     <select name="dropdown" id="dropdown"> 
-        <option value="clean">Clean</option> 
-        <option value="study">Study</option> 
-        <option value="workout">Workout</option> 
-        <option value="shop">Shop</option>
-        <option value="carpool">Carpool</option>
+        <option value="Clean">Clean</option> 
+        <option value="Study">Study</option> 
+        <option value="Workout">Workout</option> 
+        <option value="Shop">Shop</option>
+        <option value="Carpool">Carpool</option>
         <option value="Cook">Cook</option>
-        <option value="other">Other</option>
+        <option value="Other">Other</option>
     </select>`)
 
         var dropdown = $('#dropdown')
