@@ -1,10 +1,12 @@
 var plannerSection = $('#planner-section')
-var task = $('#tasks')
+var tass = $('#tasks')
 var addTaskButton = $('#add-task')
 var inputBar = $('#input')
 
-addTaskButton.on('click', function(){
-    inputBar.append(`<label for="dropdown">Choose a task:</label> 
+function addNewTask() {
+    addTaskButton.on('click', function () {
+        addTaskButton.hide()
+            inputBar.append(`<label for="dropdown" id="dropdown-label">Choose a task:</label> 
     <select name="dropdown" id="dropdown"> 
         <option value="clean">Clean</option> 
         <option value="study">Study</option> 
@@ -14,8 +16,18 @@ addTaskButton.on('click', function(){
         <option value="Cook">Cook</option>
         <option value="other">Other</option>
     </select>`)
-    var dropdown = $('#dropdown')
-    dropdown.on('click',function(){
-        console.log("test")
+
+        var dropdown = $('#dropdown')
+        var dropdownLabel = $('#dropdown-label')
+
+        dropdown.change(function () {
+            dropdown.replaceWith(
+                tasks.append($(dropdown).val())
+            )
+            dropdownLabel.remove()
+            addTaskButton.show()
+        })
     })
-})
+}
+
+addNewTask()
