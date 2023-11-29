@@ -34,6 +34,7 @@ function addNewTask() {
             dropdownLabel.remove()
             addTaskButton.show()
             var keyword = dropdown.val();
+            saveToStorage();
             //Spotift API call start
             async function getAccessToken() {
                 try {
@@ -106,7 +107,8 @@ function addNewTask() {
 
                 console.log(playlists);
 
-                var playlistLink = playlists[0].href
+                var playlistLink = playlists[0].external_urls.spotify
+
                 var playlistImage = playlists[0].images[0].url
 
                 console.log(playlistImage)
@@ -124,3 +126,9 @@ function addNewTask() {
 
 addNewTask()
 
+function saveToStorage(keyword) {
+    
+    var savedTasks = JSON.parse(localStorage.getItem("savedTasks")) || [];
+    savedTasks.push(keyword);
+    localStorage.setItem("savedTasks", JSON.stringify(savedTasks))
+}
