@@ -106,7 +106,7 @@ function addNewTask() {
 
                 console.log(playlists);
 
-                var playlistLink = playlists[0].href
+                var playlistLink = playlists[0].external_urls.spotify
                 var playlistImage = playlists[0].images[0].url
 
                 console.log(playlistImage)
