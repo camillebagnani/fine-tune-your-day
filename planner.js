@@ -2,6 +2,7 @@ var plannerSection = $('#planner-section')
 var tasks = $('#tasks')
 var addTaskButton = $('#add-task')
 var inputBar = $('#input')
+var playlistContainer = $('#playlistContainer')
 
 var client_id = "4e26ad17c8bb4367873c37ff09d37cc6";
 var client_secret = "6c247c5fb58d420ca3243ca51bc0f947";
@@ -33,6 +34,7 @@ function addNewTask() {
             dropdownLabel.remove()
             addTaskButton.show()
             var keyword = dropdown.val();
+            //Spotift API call start
             async function getAccessToken() {
                 try {
                     var response = await fetch("https://accounts.spotify.com/api/token", {
@@ -72,28 +74,30 @@ function addNewTask() {
                 } catch (error) {
                     console.log("Error getting playlists:", error);
                 }
+
+                
             }
 
-            async function displayPlaylists() {
-                var access_token = await getAccessToken();
-                var playlists = await getPlaylists(keyword, access_token);
-                var playlistContainer = document.getElementById("playlistContainer");
+            // async function displayPlaylists() {
+            //     var access_token = await getAccessToken();
+            //     var playlists = await getPlaylists(keyword, access_token);
+            //     var playlistContainer = document.getElementById("playlistContainer");
 
-                playlistContainer.innerHTML = "";
+            //     playlistContainer.innerHTML = "";
 
-                playlists.forEach(function (playlist) {
-                    var link = document.createElement("a");
-                    link.href = playlist.external_urls.spotify;
-                    link.textContent = playlist.name;
-                    link.target = "_blank";
+            //     playlists.forEach(function (playlist) {
+            //         var link = document.createElement("a");
+            //         link.href = playlist.external_urls.spotify;
+            //         link.textContent = playlist.name;
+            //         link.target = "_blank";
 
-                    var listItem = document.createElement("li");
-                    listItem.appendChild(link);
+            //         var listItem = document.createElement("li");
+            //         listItem.appendChild(link);
 
-                    playlistContainer.appendChild(listItem);
-                })
+            //         playlistContainer.appendChild(listItem);
+            //     })
 
-            }
+            // }
 
             async function main() {
                 var access_token = await getAccessToken();
@@ -101,10 +105,19 @@ function addNewTask() {
                 var playlists = await getPlaylists(keyword, access_token);
 
                 console.log(playlists);
+
+                var playlistLink = playlists[0].href
+                var playlistImage = playlists[0].images[0].url
+
+                console.log(playlistImage)
+
+                // playlistContainer.append(`<a href="${playlistLink}"><div>${playlists[0].name + " " + playlists[0].images[0].url}</div></a>`)
+                playlistContainer.append(`<a href="${playlistLink}"><div><img src="${playlistImage}"></div></a>`)
+
             }
 
             main();
-            displayPlaylists();
+            // displayPlaylists();
         })
     })
 }
