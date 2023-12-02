@@ -1,6 +1,6 @@
 var apiKEY = 'f9318e6e5f17d9852d6500f0c55afb61'
-var searchInput = $('.search-input')
-var searchBtn = $('.search-btn')
+var searchInput = document.querySelector('.search-input')
+var searchBtn = document.querySelector('.search-btn')
 function getApi() {
     var city = searchInput.val();
     var requestURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKEY;
@@ -11,7 +11,7 @@ function getApi() {
         .then(function (data) {
             console.log(data)
 
-            $('.main-weather').empty();
+            document.querySelector('.main-weather').empty();
             var dateUnix = data.dt; // change from unix
             var date = new Date(dateUnix * 1000).toLocaleDateString()
             var tempKelvin = data.main.temp; // The API default temperature unit is Kelvin
@@ -23,19 +23,19 @@ function getApi() {
             var iconURL = "https://openweathermap.org/img/wn/" + iconCode + ".png";
             // $('.search-history').append("<ul><ul>").addClass("ul")
             // $('.search-history').append('<li>' + city + '</li>').addClass("li")
-            $('.main-weather').append(`<h3>${data.name + ' ' + '(' + date + ')'}<img src="${iconURL}"></h3>`).addClass('main-weather-header');
-            $('.main-weather').append(`<p> Temp: ${tempFahrenheit}°F</p>`).addClass('weatherData');
-            $('.main-weather').append(`<p> Wind: ${windMPH} MPH</p>`).addClass('weatherData');
-            $('.main-weather').append(`<p> Humidity: ${humidity}%</p>`).addClass('weatherData');
+            document.querySelector('.main-weather').append(`<h3>${data.name + ' ' + '(' + date + ')'}<img src="${iconURL}"></h3>`).addClass('main-weather-header');
+            document.querySelector('.main-weather').append(`<p> Temp: ${tempFahrenheit}°F</p>`).addClass('weatherData');
+            document.querySelector('.main-weather').append(`<p> Wind: ${windMPH} MPH</p>`).addClass('weatherData');
+            document.querySelector('.main-weather').append(`<p> Humidity: ${humidity}%</p>`).addClass('weatherData');
         })
 }
-searchBtn.click(function (event) {
+searchBtn.addEventListener('click', function (event) {
     getApi()
 })
 
-searchInput.keypress(function (event) {
+searchInput.addEventListener('keyup', function (event) {
     if (event.keyCode === 13) {
-        searchBtn.click()
+        getApi()
     }
 })
 
