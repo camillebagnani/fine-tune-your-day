@@ -1,20 +1,73 @@
 * {
-    box-sizing: border-box;
-  }
-  .header {
-    border-radius: 8px;
-    background-color: #DDD0C8;
-    margin: 1vw;
-    box-shadow: -7px 8px 7px 0px #01110182;
-    text-align:center;
-    justify-content: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
-  }
+  box-sizing: border-box;
+}
+
+body {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('./records\ music\ wallpaper.webp');
+  height: 100vh;
+  width: 100vw;
+}
+
+/* .hidden {
+  display: none;
+} */
+
+.show {
+  display: block;
+}
+
+
+header {
+  border-radius: 8px;
+  background-color: #DDD0C8;
+  padding: 1vw;
+  box-shadow: -7px 8px 7px 0px #01110182;
+  text-align:center;
+  justify-content: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+}
+
+.btn-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.bg-btn{
+  background-color: forestgreen;
   
+}
+
+.btn-text{
+  color: white;
+}
+
+/* HOMEPAGE STYLES */
+
+.homepage-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.planner-section{
+display: flex;
+flex-direction: column;
+justify-content: flex-end ;
+height: 100%;
+}
+
+.planner-btn{
+  width: 25%;
+}
 
 @media screen and (max-width: 768px) {
-    main,
-     body {
-      flex-direction: column;
-    }
+  main,
+   body {
+    flex-direction: column;
+  }
 }
