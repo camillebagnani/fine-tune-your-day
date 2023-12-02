@@ -134,7 +134,7 @@ function getSpotifyApi(keyword) {
 
         // console.log(playlistImage)
 
-        playlistContainer.append(`<a href="${playlistLink}"><div><img src="${playlistImage}"></div></a>`)
+        playlistContainer.append(`<a href="${playlistLink}" target="_blank"><div><img src="${playlistImage}"></div></a>`)
         return spotifyPlaylist;
 
     }
