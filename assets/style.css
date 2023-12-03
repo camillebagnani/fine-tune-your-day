@@ -2,13 +2,13 @@
   box-sizing: border-box;
 }
 
-/* body {
+body {
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url('./records\ music\ wallpaper.webp');
   height: 100vh;
   width: 100vw;
-} */
+}
 
 .hidden {
   display: none;
@@ -67,11 +67,14 @@ header {
 
 #tasks-and-playlists-container {
   display: flex;
+  background-color: white;
+
 }
 
 #task-container {
   flex: 1;
   margin-right: 10px;
+  
 }
 
 #playlistContainer {
@@ -83,8 +86,8 @@ header {
 }
 
 #playlistContainer img {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   margin-right: 50px;
 }
 
@@ -99,7 +102,16 @@ header {
     width: 100px;
     height: 100px;
   }
-
 }
 
-/* need to possibly make add task/select task/time and submit button in its own div, need to make page extend past a certain point,  */
+.main-weather {
+  float: inline-end;
+  display: flex;
+  /* position:left: -100px top: 30px; */
+  align-self: flex-end;
+  flex-direction: column;
+  width: auto;
+  margin-right: 50px;
+  margin-top: 25px;
+  background-color: rgb(255, 255, 255);
+}
