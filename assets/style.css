@@ -24,50 +24,82 @@ header {
   background-color: #DDD0C8;
   padding: 1vw;
   box-shadow: -7px 8px 7px 0px #01110182;
-  text-align:center;
+  text-align: center;
   justify-content: center;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
 }
 
-.btn-container{
+.btn-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.bg-btn{
+.bg-btn {
   background-color: forestgreen;
-  
+
 }
 
-.btn-text{
+.btn-text {
   color: white;
 }
 
 /* HOMEPAGE STYLES */
 
-.homepage-header{
+.homepage-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 
-.planner-section{
-display: flex;
-flex-direction: column;
-justify-content: flex-end ;
-height: 100%;
+.planner-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
 }
 
-.planner-btn{
+.planner-btn {
   width: 25%;
 }
 
+#tasks-and-playlists-container {
+  display: flex;
+}
+
+#task-container {
+  flex: 1;
+  margin-right: 10px;
+}
+
+#playlistContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 80%;
+}
+
+#playlistContainer img {
+  width: 200px;
+  height: 200px;
+  margin-right: 50px;
+}
+
 @media screen and (max-width: 768px) {
+
   main,
-   body {
+  body {
     flex-direction: column;
   }
+
+  #playlistContainer img {
+    width: 100px;
+    height: 100px;
+  }
+
 }
+
+/* need to possibly make add task/select task/time and submit button in its own div, need to make page extend past a certain point,  */
