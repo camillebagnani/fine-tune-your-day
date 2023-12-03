@@ -47,17 +47,17 @@ submitButton.on('click', function () {
     console.log(taskArray)
 
     localStorage.setItem("Saved Tasks", JSON.stringify(taskArray));
-    
+
 })
 
-function renderSavedTasks(){
+function renderSavedTasks() {
     var getItem = JSON.parse(localStorage.getItem("Saved Tasks"));
     console.log(getItem)
     if (getItem !== null) {
-        for(var i = 0; i < getItem.length; i++) {
-        storage.append(`<div>${getItem[i].Task}</div>`)
-        storage.append(`<div>${getItem[i].Time}</div>`)
-    }
+        for (var i = 0; i < getItem.length; i++) {
+            storage.append(`<div>${getItem[i].Task}</div>`)
+            storage.append(`<div>${getItem[i].Time}</div>`)
+        }
     }
 
     console.log(getItem)
@@ -125,17 +125,29 @@ function getSpotifyApi(keyword) {
 
         var playlists = await getPlaylists(keyword, access_token);
 
+        playlistContainer.html('');
+
+        for (var i = 0; i < playlists.length; i++) {
+            var playlistLink = playlists[i].external_urls.spotify;
+            var playlistImage = playlists[i].images[0].url;
+
+            // Append each playlist to the playlistContainer
+            playlistContainer.append(`<a href="${playlistLink}" target="_blank"><div><img src="${playlistImage}"></div></a>`);
+        }
+
         // console.log(playlists);
 
-        var playlistLink = playlists[0].external_urls.spotify
-        var playlistImage = playlists[0].images[0].url
-        spotifyPlaylist = playlistLink
-        console.log(spotifyPlaylist)
+        // var playlistLink = playlists[0].external_urls.spotify
+        // var playlistImage = playlists[0].images[0].url
+        // spotifyPlaylist = playlistLink
+        // console.log(spotifyPlaylist)
 
         // console.log(playlistImage)
 
-        playlistContainer.append(`<a href="${playlistLink}" target="_blank"><div><img src="${playlistImage}"></div></a>`)
-        return spotifyPlaylist;
+        // playlistContainer.append(`<a href="${playlistLink}" target="_blank"><div><img src="${playlistImage}" style="width:200px; height: 200px;"></div></a>`)
+        // return spotifyPlaylist;
+
+        return playlists.map(playlist => playlist.external_urls.spotify);
 
     }
 
@@ -178,8 +190,8 @@ function getSpotifyApi(keyword) {
 // })
 
 // taskContainer.on('change', timeInput, function (event) {
-    //     event.target = timeInput
-    //     keyword = timeInput.length
-    //     console.log(taskArray.length)
-    //     saveToStorage(keyword)
-    // })
+//     event.target = timeInput
+//     keyword = timeInput.length
+//     console.log(taskArray.length)
+//     saveToStorage(keyword)
+// })
