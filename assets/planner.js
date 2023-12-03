@@ -11,7 +11,6 @@ var dropdown = $('#dropdown')
 var taskArray = [];
 var timeInput = $('#timeInput')
 var storage = $('#storage')
-var spotifyPlaylist;
 
 // Spotify API variables 
 var client_id = "4e26ad17c8bb4367873c37ff09d37cc6";
@@ -27,50 +26,56 @@ addTaskButton.on('click', function () {
     }
 })
 
-submitButton.on('click', function () {
-    var keyword = dropdown.val()
-    var time = (timeInput.val())
-    taskContainer.append(`<div>${keyword}</div>`)
-    taskContainer.append(`<div>${time}</div>`)
-    addTaskButton.removeClass("hidden").addClass("show") // Brings back the 'Add Task' button once 'keyword' variable is appended
-    form.addClass("hidden").removeClass("show")
-    resetForm()
-    getSpotifyApi(keyword)
+window.onload = function () {
+    for (var i = 0; i < localStorage.length; i++) {
+        var saved = JSON.parse(localStorage.getItem(i));
+        console.log(saved)
+        if (localStorage !== null) {
+            taskContainer.append(`<div>${(saved.Task)}</div>`)
+            taskContainer.append(`<div>${(saved.Time)}</div>`)
+            playlistContainer.append(`<a href="${saved.PlaylistLink}" target="_blank"><div><img src="${saved.PlaylistImage}"></div></a>`)
 
-    var savedTasks = {
-        Task: keyword,
-        Time: time,
-        // Playlists: spotifyPlaylist
-    };
-    taskArray.push(savedTasks)
+            var savedTasks = {
+                Task: saved.Task,
+                Time: saved.Time,
+                PlaylistLink: saved.PlaylistLink[i],
+                PlaylistImage: saved.PlaylistImage[i]
+            };
 
-    console.log(taskArray)
-
-    localStorage.setItem("Saved Tasks", JSON.stringify(taskArray));
-
-})
-
-function renderSavedTasks() {
-    var getItem = JSON.parse(localStorage.getItem("Saved Tasks"));
-    console.log(getItem)
-    if (getItem !== null) {
-        for (var i = 0; i < getItem.length; i++) {
-            storage.append(`<div>${getItem[i].Task}</div>`)
-            storage.append(`<div>${getItem[i].Time}</div>`)
+            taskArray.push(savedTasks)
         }
     }
-
-    console.log(getItem)
-    // var retrievedTasks = JSON.parse(getItem);
-    // taskContainer.textContent = getItem
 }
 
-renderSavedTasks()
+submitButton.on('click', async function () {
+    var keyword = dropdown.val()
+    var time = timeInput.val()
+    if (dropdown.val() !== 'Select') {
+        taskContainer.append(`<div>${keyword}</div>`)
+        taskContainer.append(`<div>${time}</div>`)
+        addTaskButton.removeClass("hidden").addClass("show") // Brings back the 'Add Task' button once 'keyword' variable is appended
+        form.addClass("hidden").removeClass("show")
+        resetForm()
+        var playlist = await getSpotifyApi(keyword)
+        // console.log(playlist)
 
+        var savedTasks = {
+            Task: keyword,
+            Time: time,
+            PlaylistLink: playlist.playlistLink,
+            PlaylistImage: playlist.playlistImage
+        };
 
+        taskArray.push(savedTasks)
 
-// console.log(retrievedTasks)
+        console.log(taskArray)
 
+        for (var i = 0; i < taskArray.length; i++) {
+            localStorage.setItem(i, JSON.stringify(taskArray[i]));
+            console.log(i)
+        }
+    }
+})
 
 function resetForm() {
     dropdown.val('Select');
@@ -78,7 +83,7 @@ function resetForm() {
 }
 
 // Runs all of the Spotify API code and passes in the parameter 'keyword'
-function getSpotifyApi(keyword) {
+async function getSpotifyApi(keyword) {
     async function getAccessToken() {
         try {
             var response = await fetch("https://accounts.spotify.com/api/token", {
@@ -120,12 +125,13 @@ function getSpotifyApi(keyword) {
         }
     }
 
-    async function main() {
+    
+    // async function main() {
         var access_token = await getAccessToken();
 
         var playlists = await getPlaylists(keyword, access_token);
 
-        playlistContainer.html('');
+        // playlistContainer.html('');
 
         for (var i = 0; i < playlists.length; i++) {
             var playlistLink = playlists[i].external_urls.spotify;
@@ -133,26 +139,19 @@ function getSpotifyApi(keyword) {
 
             // Append each playlist to the playlistContainer
             playlistContainer.append(`<a href="${playlistLink}" target="_blank"><div><img src="${playlistImage}"></div></a>`);
+            return {playlistLink, playlistImage};
         }
 
-        // console.log(playlists);
 
-        // var playlistLink = playlists[0].external_urls.spotify
-        // var playlistImage = playlists[0].images[0].url
-        // spotifyPlaylist = playlistLink
-        // console.log(spotifyPlaylist)
 
-        // console.log(playlistImage)
+    // }
 
-        // playlistContainer.append(`<a href="${playlistLink}" target="_blank"><div><img src="${playlistImage}" style="width:200px; height: 200px;"></div></a>`)
-        // return spotifyPlaylist;
+    // main();
 
-        return playlists.map(playlist => playlist.external_urls.spotify);
+    
 
-    }
 
-    main();
-
+    
 }
 
 // function saveToStorage(keyword) {
@@ -190,8 +189,29 @@ function getSpotifyApi(keyword) {
 // })
 
 // taskContainer.on('change', timeInput, function (event) {
-//     event.target = timeInput
-//     keyword = timeInput.length
-//     console.log(taskArray.length)
-//     saveToStorage(keyword)
-// })
+    //     event.target = timeInput
+    //     keyword = timeInput.length
+    //     console.log(taskArray.length)
+    //     saveToStorage(keyword)
+    // })
+
+    // function renderSavedTasks(){
+//     var getItem = JSON.parse(localStorage.getItem("Saved Tasks"));
+//     console.log(getItem)
+//     if (getItem !== null) {
+//         for(var i = 0; i < getItem.length; i++) {
+//         storage.append(`<div>${getItem[i].Task}</div>`)
+//         storage.append(`<div>${getItem[i].Time}</div>`)
+//     }
+//     }
+
+//     console.log(getItem)
+//     // var retrievedTasks = JSON.parse(getItem);
+//     // taskContainer.textContent = getItem
+// }
+
+// renderSavedTasks()
+
+
+
+// console.log(retrievedTasks)
