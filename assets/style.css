@@ -21,28 +21,49 @@ body {
 
 header {
   border-radius: 8px;
-  background-color: #DDD0C8;
-  padding: 1vw;
+  background-color: #ddd0c8c8;
+  padding: 3vw;
   box-shadow: -7px 8px 7px 0px #01110182;
   text-align: center;
+  font-size: larger;
   justify-content: center;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+}
+
+.h1-text {
+  font-weight: bolder;
+  font-size: larger;
+  color: rgba(11, 22, 11, 0.712)
+}
+
+.intro {
+  color: white;
+  margin-top: 10vw;
+  padding: 6vw;
+  border-radius: 8px;
+  font-size: large;
+  background-color: rgba(0, 0, 0, 0.554);
+  width: 90%;
+  margin-left: 5%;
+  box-shadow: -7px 8px 7px 0px #01110182;
 }
 
 .btn-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin-top: 8vw;
   height: 100vh;
 }
 
 .bg-btn {
-  background-color: forestgreen;
-
+  background-color: rgba(34, 139, 34, 0.664);
+  padding: 3vw;
+  box-shadow: -7px 8px 7px 0px #01110182;
 }
 
 .btn-text {
   color: white;
+  font-weight: bolder;
 }
 
 /* HOMEPAGE STYLES */
@@ -51,6 +72,9 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: bolder;
+  font-size: larger;
+  color: rgba(11, 22, 11, 0.712)
 }
 
 
@@ -81,7 +105,10 @@ header {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  background-color: beige;
+  background-color: rgba(81, 78, 102, 0.664);
+  color: aliceblue;
+  border-radius: 8px;
+
 }
 
 /* #playlistContainer {
@@ -111,24 +138,31 @@ header {
   /* position:left: -100px top: 30px; */
   align-self: flex-end;
   flex-direction: column;
-  width: auto;
-  margin-right: 50px;
+  width: 30%;
+  margin-left: 500px;
   margin-top: 25px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.487);
+  color: black;
 }
 
-@media screen and (max-width: 768px) {
-
-  main,
-  body {
-    flex-direction: column;
-  }
-
-  #playlistContainer img {
-    width: 100px;
-    height: 100px;
-  }
-
+.planner-btn {
+  color: black;
+  background-color: rgba(255, 255, 255, 0.606);
+  border-radius: 8px;
+  box-shadow: -7px 8px 7px 0px #01110182;
 }
+
+@media only screen and (min-width: 480px) and (max-width: 768px) {
+  .content {
+    width: 100%;
+  }
+}
+
+#playlistContainer img {
+  width: 100px;
+  height: 100px;
+}
+
+
 
 /* need to possibly make add task/select task/time and submit button in its own div, need to make page extend past a certain point,  */
