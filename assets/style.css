@@ -54,54 +54,55 @@ header {
 }
 
 
-.planner-section {
+/* .planner-section {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   height: 100%;
-}
+} */
 
 .planner-btn {
   width: 25%;
 }
 
-#tasks-and-playlists-container {
+/* #tasks-and-playlists-container {
   display: flex;
-  background-color: white;
-
-}
+} */
 
 #task-container {
-  flex: 1;
-  margin-right: 10px;
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* flex-wrap: wrap; */
 }
 
-#playlistContainer {
+.appendedTasks {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: beige;
+}
+
+/* #playlistContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   width: 80%;
+} */
+
+#playlistRow {
+  display: flex;
+  width: 50%;
 }
 
-#playlistContainer img {
-  width: 100px;
-  height: 100px;
+.playlistImage {
+  width: 200px;
+  height: 200px;
   margin-right: 50px;
-}
-
-@media screen and (max-width: 768px) {
-
-  main,
-  body {
-    flex-direction: column;
-  }
-
-  #playlistContainer img {
-    width: 100px;
-    height: 100px;
-  }
+  /* display: flex;
+  flex-direction: row; */
 }
 
 .main-weather {
@@ -115,3 +116,19 @@ header {
   margin-top: 25px;
   background-color: rgb(255, 255, 255);
 }
+
+@media screen and (max-width: 768px) {
+
+  main,
+  body {
+    flex-direction: column;
+  }
+
+  #playlistContainer img {
+    width: 100px;
+    height: 100px;
+  }
+
+}
+
+/* need to possibly make add task/select task/time and submit button in its own div, need to make page extend past a certain point,  */

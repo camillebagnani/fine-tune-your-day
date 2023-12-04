@@ -1,16 +1,11 @@
-//TODO: get value of playlist and playlist image for local storage
-
 var plannerSection = $('#planner-section')
 var taskContainer = $('#task-container')
 var addTaskButton = $('#add-task')
 var submitButton = $('#submit')
-// var inputBar = $('#input')
 var form = $('#form')
-var playlistContainer = $('#playlistContainer')
 var dropdown = $('#dropdown')
 var taskArray = [];
 var timeInput = $('#timeInput')
-var storage = $('#storage')
 
 // Spotify API variables 
 var client_id = "4e26ad17c8bb4367873c37ff09d37cc6";
@@ -29,19 +24,33 @@ addTaskButton.on('click', function () {
 window.onload = function () {
     for (var i = 0; i < localStorage.length; i++) {
         var saved = JSON.parse(localStorage.getItem(i));
-        console.log(saved)
+        
         if (localStorage !== null) {
-            taskContainer.append(`<div>${(saved.Task)}</div>`)
-            taskContainer.append(`<div>${(saved.Time)}</div>`)
-            playlistContainer.append(`<a href="${saved.PlaylistLink}" target="_blank"><div><img src="${saved.PlaylistImage}"></div></a>`)
-
+            taskContainer.append(`<div class="appendedTasks">
+            <div>${(saved.Time)}</div>
+            <div>${(saved.Task)}</div> 
+            <div id="playlistRow">
+            <a href="${saved.PlaylistLink.Playlist1}" target="_blank"><div><img class="playlistImage" src="${saved.PlaylistImage.Image1}"}></div></a>
+            <a href="${saved.PlaylistLink.Playlist2}" target="_blank"><div><img class="playlistImage" src="${saved.PlaylistImage.Image2}"></div></a>
+            <a href="${saved.PlaylistLink.Playlist3}" target="_blank"><div><img class="playlistImage" src="${saved.PlaylistImage.Image3}"></div></a>
+            </div>
+            </div>`)
+        
             var savedTasks = {
                 Task: saved.Task,
                 Time: saved.Time,
-                PlaylistLink: saved.PlaylistLink[i],
-                PlaylistImage: saved.PlaylistImage[i]
+                PlaylistLink: {
+                    Playlist1: saved.PlaylistLink.Playlist1, 
+                    Playlist2: saved.PlaylistLink.Playlist2,
+                    Playlist3: saved.PlaylistLink.Playlist3,
+                },
+                PlaylistImage: {
+                    Image1: saved.PlaylistImage.Image1,
+                    Image2: saved.PlaylistImage.Image2,
+                    Image3: saved.PlaylistImage.Image3
+                }
             };
-
+            
             taskArray.push(savedTasks)
         }
     }
@@ -51,28 +60,44 @@ submitButton.on('click', async function () {
     var keyword = dropdown.val()
     var time = timeInput.val()
     if (dropdown.val() !== 'Select') {
-        taskContainer.append(`<div>${keyword}</div>`)
-        taskContainer.append(`<div>${time}</div>`)
+        // taskContainer.append(`<div>${keyword} ${time}</div>`)
+        // taskContainer.append(`<div>${time}</div>`)
         addTaskButton.removeClass("hidden").addClass("show") // Brings back the 'Add Task' button once 'keyword' variable is appended
         form.addClass("hidden").removeClass("show")
         resetForm()
         var playlist = await getSpotifyApi(keyword)
-        // console.log(playlist)
+
+        taskContainer.append(`<div class="appendedTasks">
+        <div>${time}</div>
+        <div>${keyword}</div> 
+            <div id="playlistRow">
+            <a href="${playlist.playlistLinkArray[0]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[0]}"}></div></a>
+            <a href="${playlist.playlistLinkArray[1]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[1]}"></div></a>
+            <a href="${playlist.playlistLinkArray[2]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[2]}"></div></a>
+            </div>
+            </div>`)
 
         var savedTasks = {
             Task: keyword,
             Time: time,
-            PlaylistLink: playlist.playlistLink,
-            PlaylistImage: playlist.playlistImage
+            PlaylistLink: {
+                Playlist1: playlist.playlistLinkArray[0], 
+                Playlist2: playlist.playlistLinkArray[1],
+                Playlist3: playlist.playlistLinkArray[2]
+            },
+            PlaylistImage: {
+                Image1: playlist.playlistImageArray[0],
+                Image2: playlist.playlistImageArray[1],
+                Image3: playlist.playlistImageArray[2]
+            },
         };
-
+        
         taskArray.push(savedTasks)
-
-        console.log(taskArray)
+        console.log(savedTasks)
+        
 
         for (var i = 0; i < taskArray.length; i++) {
             localStorage.setItem(i, JSON.stringify(taskArray[i]));
-            console.log(i)
         }
     }
 })
@@ -125,26 +150,58 @@ async function getSpotifyApi(keyword) {
         }
     }
 
-    
+
     // async function main() {
-        var access_token = await getAccessToken();
+    var access_token = await getAccessToken();
 
-        var playlists = await getPlaylists(keyword, access_token);
+    var playlists = await getPlaylists(keyword, access_token);
 
-        // playlistContainer.html('');
+    // playlistContainer.html('');
 
-        for (var i = 0; i < playlists.length; i++) {
-            var playlistLink = playlists[i].external_urls.spotify;
-            var playlistImage = playlists[i].images[0].url;
+    var playlistLinkArray = [];
+    var playlistImageArray = [];
 
-            // Append each playlist to the playlistContainer
-            playlistContainer.append(`<a href="${playlistLink}" target="_blank"><div><img src="${playlistImage}"></div></a>`);
-            return {playlistLink, playlistImage};
-        }
+    for (var i = 0; i < playlists.length; i++) {
+        var playlistLink = playlists[i].external_urls.spotify;
+        var playlistImage = playlists[i].images[0].url;
+        
+        playlistLinkArray.push(playlistLink);
+        playlistImageArray.push(playlistImage);
+
+        // Append each playlist to the playlistContainer
+        // taskContainer.append(`<a href="${playlistLink}" target="_blank"><div><img src="${playlistImage}"></div></a>`);
+    }
+    
+    return {
+        playlistLinkArray: playlistLinkArray,
+        playlistImageArray: playlistImageArray
+      };
+    // return {playlistLink, playlistImage};
+}
+
+
+   
 
 
 
-    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// }
 
     // main();
 
@@ -152,7 +209,7 @@ async function getSpotifyApi(keyword) {
 
 
     
-}
+
 
 // function saveToStorage(keyword) {
 //     var savedTasks = JSON.parse(localStorage.getItem(taskArray.length)) || [];
