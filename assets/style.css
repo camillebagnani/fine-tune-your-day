@@ -163,6 +163,8 @@ header {
   height: 100px;
 }
 
-
+.delete {
+  margin-left: 5px
+}
 
 /* need to possibly make add task/select task/time and submit button in its own div, need to make page extend past a certain point,  */
