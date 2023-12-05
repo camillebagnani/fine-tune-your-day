@@ -3,7 +3,7 @@ var addTaskButton = $('#add-task')
 var submitButton = $('#submit')
 var form = $('#form')
 var dropdown = $('#dropdown')
-var taskArray = [];
+// var taskArray = [];
 var timeInput = $('#timeInput')
 
 // Spotify API variables 
@@ -22,52 +22,37 @@ addTaskButton.on('click', function () {
 
 //Checks for local storage on load
 window.onload = function () {
-    for (var i = 0; i < localStorage.length; i++) {
-        var saved = JSON.parse(localStorage.getItem(i));
-        // If there is local storage, it will grab local storage and append it the same way as the submitButton function
-        if (localStorage !== null) {
-            taskContainer.append(`<div class="eachTask">
-            <button class="delete"></button>
-            <div class="appendedTasks">
-            <div>${(saved.Time)}</div>
-            <div>${(saved.Task)}</div> 
-            <div id="playlistRow">
-            <a href="${saved.PlaylistLink.Playlist1}" target="_blank"><div><img class="playlistImage" src="${saved.PlaylistImage.Image1}"}></div></a>
-            <a href="${saved.PlaylistLink.Playlist2}" target="_blank"><div><img class="playlistImage" src="${saved.PlaylistImage.Image2}"></div></a>
-            <a href="${saved.PlaylistLink.Playlist3}" target="_blank"><div><img class="playlistImage" src="${saved.PlaylistImage.Image3}"></div></a>
-            </div>
-            </div>
-            </div>`)
-            var closeButton = $('.delete')
-
-            closeButton.on('click', function (event) {
-                if ($(event.target).hasClass("delete")) {
-                    $(event.target).parent().remove()
-                    localStorage.clear()
-                }
-            })
-
-            // The savedTasks array grabs the property values from the saved local storage if it exists
-            var savedTasks = {
-                Task: saved.Task,
-                Time: saved.Time,
-                PlaylistLink: {
-                    Playlist1: saved.PlaylistLink.Playlist1,
-                    Playlist2: saved.PlaylistLink.Playlist2,
-                    Playlist3: saved.PlaylistLink.Playlist3,
-                },
-                PlaylistImage: {
-                    Image1: saved.PlaylistImage.Image1,
-                    Image2: saved.PlaylistImage.Image2,
-                    Image3: saved.PlaylistImage.Image3
-                }
-            };
-
-            taskArray.push(savedTasks)
-        }
-    }
+    loadSavedItems()
 }
 
+function loadSavedItems() {
+    taskContainer.empty()
+    var savedTasks = JSON.parse(localStorage.getItem("savedTasks")) || []
+    for (var i = 0; i < savedTasks.length; i++) {
+        var saved = savedTasks[i];
+        // If there is local storage, it will grab local storage and append it the same way as the submitButton function
+        createCard(saved.time, saved.keyword, saved.playlist, i)
+
+        // The savedTasks array grabs the property values from the saved local storage if it exists
+        // var savedTasks = {
+        //     Task: saved.Task,
+        //     Time: saved.Time,
+        //     PlaylistLink: {
+        //         Playlist1: saved.PlaylistLink.Playlist1,
+        //         Playlist2: saved.PlaylistLink.Playlist2,
+        //         Playlist3: saved.PlaylistLink.Playlist3,
+        //     },
+        //     PlaylistImage: {
+        //         Image1: saved.PlaylistImage.Image1,
+        //         Image2: saved.PlaylistImage.Image2,
+        //         Image3: saved.PlaylistImage.Image3
+        //     }
+        // };
+
+        // taskArray.push(savedTasks)
+
+    }
+}
 // Uses an async function to wait for the return of the promise from the Spotify API, then it can append the values from the Spotify API
 submitButton.on('click', async function () {
     var keyword = dropdown.val()
@@ -79,52 +64,62 @@ submitButton.on('click', async function () {
         resetForm()
         var playlist = await getSpotifyApi(keyword)
 
-        // Appends a div that includes the user's selected time, task and playlists that were chosen by the keyword from the Spotify API call
-        taskContainer.append(`<div class="eachTask">
-        <button class="delete"></button>
-        <div class="appendedTasks">
-        <div>${time}</div>
-        <div>${keyword}</div> 
-            <div id="playlistRow">
-            <a href="${playlist.playlistLinkArray[0]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[0]}"}></div></a>
-            <a href="${playlist.playlistLinkArray[1]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[1]}"></div></a>
-            <a href="${playlist.playlistLinkArray[2]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[2]}"></div></a>
-            </div>
-            </div>
-            </div>`);
-        var closeButton = $('.delete')
 
-        closeButton.on('click', function (event) {
-            if ($(event.target).hasClass("delete")) {
-                $(event.target).parent().remove()
-            }
-        })
 
         // Create an object of saved tasks to be pushed into taskArray, which we use to set local storage
-        var savedTasks = {
-            Task: keyword,
-            Time: time,
-            PlaylistLink: {
-                Playlist1: playlist.playlistLinkArray[0],
-                Playlist2: playlist.playlistLinkArray[1],
-                Playlist3: playlist.playlistLinkArray[2]
-            },
-            PlaylistImage: {
-                Image1: playlist.playlistImageArray[0],
-                Image2: playlist.playlistImageArray[1],
-                Image3: playlist.playlistImageArray[2]
-            },
+        var savedTask = {
+            keyword: keyword,
+            time: time,
+            playlist: playlist
         };
 
-        taskArray.push(savedTasks)
+
+        var savedTasks = JSON.parse(localStorage.getItem("savedTasks")) || []
+
+        savedTasks.push(savedTask)
+
+        localStorage.setItem("savedTasks", JSON.stringify(savedTasks))
+
+        loadSavedItems()
         // Set local storage with the key as the index of the task array, and the value of the taskArray at index
-        for (var i = 0; i < taskArray.length; i++) {
-            localStorage.setItem(i, JSON.stringify(taskArray[i]));
-        }
+        // for (var i = 0; i < taskArray.length; i++) {
+        //     localStorage.setItem(i, JSON.stringify(taskArray[i]));
+        // }
     }
 })
 
+function removeItem(event) {
+    if ($(event.target).hasClass("delete")) {
+        $(event.target).parent().remove()
+        console.dir(event.target);
+        var savedTasks = JSON.parse(localStorage.getItem("savedTasks")) || []
 
+        var filteredTasks = savedTasks.filter((task, index) => {
+            return index != event.target.dataset.key
+        })
+
+        localStorage.setItem("savedTasks", JSON.stringify(filteredTasks))
+    }
+}
+
+function createCard(time, keyword, playlist, index) {
+    // Appends a div that includes the user's selected time, task and playlists that were chosen by the keyword from the Spotify API call
+    taskContainer.append(`<div class="eachTask">
+    <button data-key=${index} class="delete" id="delete-${index}"></button>
+    <div class="appendedTasks">
+    <div>${time}</div>
+    <div>${keyword}</div> 
+        <div id="playlistRow">
+        <a href="${playlist.playlistLinkArray[0]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[0]}"}></div></a>
+        <a href="${playlist.playlistLinkArray[1]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[1]}"></div></a>
+        <a href="${playlist.playlistLinkArray[2]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[2]}"></div></a>
+        </div>
+        </div>
+        </div>`);
+    var closeButton = $('#delete-' + index)
+
+    closeButton.on('click', removeItem)
+}
 
 // Resets the task and time inputs in the form
 function resetForm() {

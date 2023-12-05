@@ -24,7 +24,7 @@ function getApi() {
             // $('.search-history').append("<ul><ul>").addClass("ul")
             // $('.search-history').append('<li>' + city + '</li>').addClass("li")
             var exitBtn = $('<button class="delete"></button>')
-            exitBtn.on('click',function(){
+            exitBtn.on('click', function () {
                 $('.main-weather').empty()
             })
             $(".main-weather").append(exitBtn)
@@ -32,7 +32,8 @@ function getApi() {
             $('.main-weather').append(`<p> Temp: ${tempFahrenheit}°F</p>`).addClass('weatherData');
             $('.main-weather').append(`<p> Wind: ${windMPH} MPH</p>`).addClass('weatherData');
             $('.main-weather').append(`<p> Humidity: ${humidity}%</p>`).addClass('weatherData');
-            $('.main-weather').css('background-color','rgba(255, 255, 255, 0.487)')
+            $('.main-weather').css('background-color', 'rgba(255, 255, 255, 0.487)')
+            searchInput.val("");
         })
 }
 searchBtn.on('click', function (event) {
