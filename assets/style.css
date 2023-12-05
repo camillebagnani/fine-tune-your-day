@@ -6,7 +6,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url('./records\ music\ wallpaper.webp');
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 }
 
@@ -78,68 +78,51 @@ header {
 }
 
 
-/* .planner-section {
+.planner-section {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   height: 100%;
-} */
+}
 
 .planner-btn {
   width: 25%;
 }
 
-/* #tasks-and-playlists-container {
-  display: flex;
-} */
-
 #task-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  /* flex-wrap: wrap; */
 }
 
 .appendedTasks {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   background-color: rgba(81, 78, 102, 0.664);
   color: aliceblue;
   border-radius: 8px;
-
+  padding: 10px;
+  max-width: 1750px;
 }
-
-/* #playlistContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 80%;
-} */
 
 #playlistRow {
   display: flex;
-  width: 50%;
 }
 
 .playlistImage {
-  width: 200px;
-  height: 200px;
-  margin-right: 50px;
-  /* display: flex;
-  flex-direction: row; */
+  width: 250px;
+  height: 250px;
 }
 
 .main-weather {
   float: inline-end;
   display: flex;
-  /* position:left: -100px top: 30px; */
   align-self: flex-end;
   flex-direction: column;
-  width: 30%;
-  margin-left: 500px;
+  margin-left: 50px;
+  margin-right: 50px;
   margin-top: 25px;
   background-color: rgba(255, 255, 255, 0.487);
   color: black;
@@ -156,15 +139,13 @@ header {
   .content {
     width: 100%;
   }
-}
 
-#playlistContainer img {
-  width: 100px;
-  height: 100px;
+  .playlistImage {
+    height: 100px;
+    width: 100px;
+  }
 }
 
 .delete {
   margin-left: 5px
 }
-
-/* need to possibly make add task/select task/time and submit button in its own div, need to make page extend past a certain point,  */
