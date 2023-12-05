@@ -10,23 +10,6 @@ var timeInput = $('#timeInput')
 var client_id = "4e26ad17c8bb4367873c37ff09d37cc6";
 var client_secret = "6c247c5fb58d420ca3243ca51bc0f947";
 
-// Close button attempt
-// var closeButton = $('.planner-section')
-
-// closeButton.click(function (event) {
-//     if($(event.target).hasClass("delete")) {
-//         // var currentTask;
-//         var currentCloseButton = $(event.target).siblings(".appendedTasks")
-//         currentCloseButton.closest(".appendedTasks").remove()
-
-//         // if($(event.target).hasClass("delete")) {
-//         //     // currentTask = $(event.target).parent().siblings(".appendedTasks").remove()
-//         //     currentCloseButton = $(event.target).siblings(".appendedTasks").remove()
-//         //     console.log(currentCloseButton)
-//         // }
-//     }
-// })
-
 // Form with task dropdown and time shows up once you click the 'Add Task' button
 addTaskButton.on('click', function () {
     // Checks condition - if the input bar is hidden, it shows up by replacing the 'Add Task' button
@@ -43,7 +26,8 @@ window.onload = function () {
         var saved = JSON.parse(localStorage.getItem(i));
         // If there is local storage, it will grab local storage and append it the same way as the submitButton function
         if (localStorage !== null) {
-            taskContainer.append(`<button class="delete"></button>
+            taskContainer.append(`<div class="eachTask">
+            <button class="delete"></button>
             <div class="appendedTasks">
             <div>${(saved.Time)}</div>
             <div>${(saved.Task)}</div> 
@@ -52,7 +36,16 @@ window.onload = function () {
             <a href="${saved.PlaylistLink.Playlist2}" target="_blank"><div><img class="playlistImage" src="${saved.PlaylistImage.Image2}"></div></a>
             <a href="${saved.PlaylistLink.Playlist3}" target="_blank"><div><img class="playlistImage" src="${saved.PlaylistImage.Image3}"></div></a>
             </div>
+            </div>
             </div>`)
+            var closeButton = $('.delete')
+
+            closeButton.on('click', function (event) {
+                if ($(event.target).hasClass("delete")) {
+                    $(event.target).parent().remove()
+                    localStorage.clear()
+                }
+            })
 
             // The savedTasks array grabs the property values from the saved local storage if it exists
             var savedTasks = {
@@ -87,7 +80,8 @@ submitButton.on('click', async function () {
         var playlist = await getSpotifyApi(keyword)
 
         // Appends a div that includes the user's selected time, task and playlists that were chosen by the keyword from the Spotify API call
-        taskContainer.append(`<button class="delete">X</button>
+        taskContainer.append(`<div class="eachTask">
+        <button class="delete"></button>
         <div class="appendedTasks">
         <div>${time}</div>
         <div>${keyword}</div> 
@@ -96,7 +90,15 @@ submitButton.on('click', async function () {
             <a href="${playlist.playlistLinkArray[1]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[1]}"></div></a>
             <a href="${playlist.playlistLinkArray[2]}" target="_blank"><div><img class="playlistImage" src="${playlist.playlistImageArray[2]}"></div></a>
             </div>
+            </div>
             </div>`);
+        var closeButton = $('.delete')
+
+        closeButton.on('click', function (event) {
+            if ($(event.target).hasClass("delete")) {
+                $(event.target).parent().remove()
+            }
+        })
 
         // Create an object of saved tasks to be pushed into taskArray, which we use to set local storage
         var savedTasks = {
@@ -121,6 +123,8 @@ submitButton.on('click', async function () {
         }
     }
 })
+
+
 
 // Resets the task and time inputs in the form
 function resetForm() {
@@ -193,3 +197,15 @@ async function getSpotifyApi(keyword) {
         playlistImageArray: playlistImageArray
     };
 }
+
+// var closeButton = $('.closeButton')
+
+// closeButton.on('click',function removeEvent(event) {
+//     if (event.target.classList.contains("closeButton")) {
+//         console.log("testing")
+//       list.removeChild(event.target.parentElement);
+//     } 
+//     // else if (event.target.tagName === "I") {
+//     //   event.target.parentElement.classList.toggle("item-checked");
+//     // }
+//   })
