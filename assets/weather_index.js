@@ -26,12 +26,15 @@ function getApi() {
             var exitBtn = $('<button class="delete"></button>')
             exitBtn.on('click',function(){
                 $('.main-weather').empty()
+                console.log('ping')
             })
+            $('.main-weather').append()
             $(".main-weather").append(exitBtn)
             $('.main-weather').append(`<h3>${data.name + ' ' + '(' + date + ')'}<img src="${iconURL}"></h3>`).addClass('main-weather-header');
             $('.main-weather').append(`<p> Temp: ${tempFahrenheit}°F</p>`).addClass('weatherData');
             $('.main-weather').append(`<p> Wind: ${windMPH} MPH</p>`).addClass('weatherData');
             $('.main-weather').append(`<p> Humidity: ${humidity}%</p>`).addClass('weatherData');
+            $('.main-weather').css('background-color','rgba(255, 255, 255, 0.487)')
         })
 }
 searchBtn.on('click', function (event) {
