@@ -32,6 +32,7 @@ function getApi() {
             $('.main-weather').append(`<p> Temp: ${tempFahrenheit}°F</p>`).addClass('weatherData');
             $('.main-weather').append(`<p> Wind: ${windMPH} MPH</p>`).addClass('weatherData');
             $('.main-weather').append(`<p> Humidity: ${humidity}%</p>`).addClass('weatherData');
+            $('.main-weather').css('background-color','rgba(255, 255, 255, 0.487)')
         })
 }
 searchBtn.on('click', function (event) {
