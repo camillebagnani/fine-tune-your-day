@@ -33,27 +33,32 @@
 
 
         <section id="planner-section" class='planner-section'>
-            
+
             <div id="task-container"></div>
 
             <div id="form" class="hidden task-submit">
-                <div>
-                    <label for="dropdown" id="dropdown-label">Choose a task:</label>
-                    <select id="dropdown">
-                        <option value="Select">Select</option>
-                        <option value="Clean">Clean</option>
-                        <option value="Study">Study</option>
-                        <option value="Workout">Workout</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="Driving">Driving</option>
-                        <option value="Cook">Cook</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+                <div class="task-div">
+                    <div>
+                        <label for="dropdown" id="dropdown-label">Choose a task:</label>
+                        <select id="dropdown">
+                            <option value="Select">Select</option>
+                            <option value="Clean">Clean</option>
+                            <option value="Study">Study</option>
+                            <option value="Workout">Workout</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Driving">Driving</option>
+                            <option value="Cook">Cook</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
 
-                <input type="time" class="time" id="timeInput" name="time" min="00:00" max="23:00" required />
-                <br>
-                <button id="submit" class="button is-primary is-light">Submit</button>
+                    <div>
+                        <label for="time" id="time">Time of Activity:</label>
+                        <input type="time" class="time" id="timeInput" name="time" min="00:00" max="23:00" required />
+                    </div>
+
+                    <button id="submit" class="button is-primary is-light">Submit</button>
+                </div>
             </div>
 
             <button id="add-task" class="planner-btn">Add Task +</button>
