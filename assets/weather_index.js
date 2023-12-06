@@ -3,7 +3,7 @@ var searchInput = $('.search-input')
 var searchBtn = $('.search-btn')
 function getApi() {
     var city = searchInput.val();
-    var requestURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKEY;
+    var requestURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKEY;
     fetch(requestURL)
         .then(function (response) {
             return response.json();
