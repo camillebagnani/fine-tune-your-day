@@ -32,25 +32,6 @@ function loadSavedItems() {
         var saved = savedTasks[i];
         // If there is local storage, it will grab local storage and append it the same way as the submitButton function
         createCard(saved.time, saved.keyword, saved.playlist, i)
-
-        // The savedTasks array grabs the property values from the saved local storage if it exists
-        // var savedTasks = {
-        //     Task: saved.Task,
-        //     Time: saved.Time,
-        //     PlaylistLink: {
-        //         Playlist1: saved.PlaylistLink.Playlist1,
-        //         Playlist2: saved.PlaylistLink.Playlist2,
-        //         Playlist3: saved.PlaylistLink.Playlist3,
-        //     },
-        //     PlaylistImage: {
-        //         Image1: saved.PlaylistImage.Image1,
-        //         Image2: saved.PlaylistImage.Image2,
-        //         Image3: saved.PlaylistImage.Image3
-        //     }
-        // };
-
-        // taskArray.push(savedTasks)
-
     }
 }
 // Uses an async function to wait for the return of the promise from the Spotify API, then it can append the values from the Spotify API
@@ -81,17 +62,13 @@ submitButton.on('click', async function () {
         localStorage.setItem("savedTasks", JSON.stringify(savedTasks))
 
         loadSavedItems()
-        // Set local storage with the key as the index of the task array, and the value of the taskArray at index
-        // for (var i = 0; i < taskArray.length; i++) {
-        //     localStorage.setItem(i, JSON.stringify(taskArray[i]));
-        // }
     }
 })
 
 function removeItem(event) {
     if ($(event.target).hasClass("delete")) {
         $(event.target).parent().remove()
-        console.dir(event.target);
+        // console.dir(event.target);
         var savedTasks = JSON.parse(localStorage.getItem("savedTasks")) || []
 
         var filteredTasks = savedTasks.filter((task, index) => {
@@ -192,15 +169,3 @@ async function getSpotifyApi(keyword) {
         playlistImageArray: playlistImageArray
     };
 }
-
-// var closeButton = $('.closeButton')
-
-// closeButton.on('click',function removeEvent(event) {
-//     if (event.target.classList.contains("closeButton")) {
-//         console.log("testing")
-//       list.removeChild(event.target.parentElement);
-//     } 
-//     // else if (event.target.tagName === "I") {
-//     //   event.target.parentElement.classList.toggle("item-checked");
-//     // }
-//   })

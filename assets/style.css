@@ -21,7 +21,7 @@ html {
 }
 
 
-header {
+.homepage-header, .index-header {
   background-image: url('./todays\ playlist\ wallpaper.webp');
   opacity: 0.7;
   border-radius: 8px;
