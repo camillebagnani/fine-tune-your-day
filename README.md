@@ -19,5 +19,9 @@ Bulma: https://bulma.io/documentation/
 Spotify API: https://developer.spotify.com/documentation/web-api
 OpenWeather API: https://openweathermap.org/api
 
+## How the application looks
+
+![image](./assets/FineTuneYourDay.png)
+
 ## License
 n/a
